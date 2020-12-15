@@ -5,33 +5,33 @@ namespace INPTPZ1
 {
     class Polynomial
     {
-        public List<Cplx> ComplexNumbers { get; } = new List<Cplx>();
+        public List<Complex> ComplexNumbers { get; } = new List<Complex>();
         public Polynomial Derive()
         {
             Polynomial derivated = new Polynomial();
 
             for (int i = 1; i < ComplexNumbers.Count; i++)
             {
-                Cplx multiplier = new Cplx() { Real = i }; 
+                Complex multiplier = new Complex() { Real = i }; 
                 derivated.ComplexNumbers.Add(ComplexNumbers[i].Multiply(multiplier));
             }
 
             return derivated;
         }
 
-        public Cplx Evaluate(Cplx evaluation)
+        public Complex Evaluate(Complex evaluation)
         {
-            Cplx evaluated = Cplx.Zero;
+            Complex evaluated = Complex.Zero;
             for (int i = 0; i < ComplexNumbers.Count; i++)
                 evaluated = evaluated.Add(MultiplicateCoefficient(i,evaluation));
             
             return evaluated;
         }
 
-        private Cplx MultiplicateCoefficient(int power, Cplx evaluation)
+        private Complex MultiplicateCoefficient(int power, Complex evaluation)
         {
-            Cplx coefficient = ComplexNumbers[power];
-            Cplx evaluationTotal = evaluation;
+            Complex coefficient = ComplexNumbers[power];
+            Complex evaluationTotal = evaluation;
            
             if (power > 0)
             {
