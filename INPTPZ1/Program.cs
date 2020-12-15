@@ -22,13 +22,12 @@ namespace INPTPZ1
 
             List<Cplx> koreny = new List<Cplx>();
             // TODO: poly should be parameterised?
-            Poly p = new Poly();
-            p.Coe.Add(new Cplx() { Real = 1 });
-            p.Coe.Add(Cplx.Zero);
-            p.Coe.Add(Cplx.Zero);
-            //p.Coe.Add(Cplx.Zero);
-            p.Coe.Add(new Cplx() { Real = 1 });
-            Poly pd = p.Derive();
+            Polynomial p = new Polynomial();
+            p.ComplexNumbers.Add(new Cplx() { Real = 1 });
+            p.ComplexNumbers.Add(Cplx.Zero);
+            p.ComplexNumbers.Add(Cplx.Zero);
+            p.ComplexNumbers.Add(new Cplx() { Real = 1 });
+            Polynomial pd = p.Derive();
 
             Console.WriteLine(p);
             Console.WriteLine(pd);
@@ -61,25 +60,19 @@ namespace INPTPZ1
                     if (ox.Imaginari == 0)
                         ox.Imaginari = 0.0001f;
 
-                    //Console.WriteLine(ox);
-
                     // find solution of equation using newton's iteration
                     float it = 0;
                     for (int q = 0; q< 30; q++)
                     {
-                        var diff = p.Eval(ox).Divide(pd.Eval(ox));
+                        var diff = p.Evaluate(ox).Divide(pd.Evaluate(ox));
                         ox = ox.Subtract(diff);
 
-                        //Console.WriteLine($"{q} {ox} -({diff})");
                         if (Math.Pow(diff.Real, 2) + Math.Pow(diff.Imaginari, 2) >= 0.5)
                         {
                             q--;
                         }
                         it++;
                     }
-
-                    //Console.ReadKey();
-
                     // find solution root number
                     var known = false;
                     var id = 0;
@@ -97,23 +90,16 @@ namespace INPTPZ1
                         id = koreny.Count;
                         maxid = id + 1; 
                     }
-
                     // colorize pixel according to root number
-                    //int vv = id;
-                    //int vv = id * 50 + (int)it*5;
                     var vv = clrs[id % clrs.Length];
                     vv = Color.FromArgb(vv.R, vv.G, vv.B);
                     vv = Color.FromArgb(Math.Min(Math.Max(0, vv.R-(int)it*2), 255), Math.Min(Math.Max(0, vv.G - (int)it*2), 255), Math.Min(Math.Max(0, vv.B - (int)it*2), 255));
-                    //vv = Math.Min(Math.Max(0, vv), 255);
+                 
                     image.SetPixel(j, i, vv);
-                    //bmp.SetPixel(j, i, Color.FromArgb(vv, vv, vv));
+                  
                 }
             }
-
-       
-
                     image.Save(arguments.FilePath ?? "../../../out.png");
-            //Console.ReadKey();
         }
     }
 
