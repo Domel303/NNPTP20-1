@@ -20,13 +20,13 @@ namespace INPTPZ1
             Bitmap image = new Bitmap(arguments.Width, arguments.Height);
            
 
-            List<Cplx> koreny = new List<Cplx>();
+            List<Complex> koreny = new List<Complex>();
             // TODO: poly should be parameterised?
             Polynomial p = new Polynomial();
-            p.ComplexNumbers.Add(new Cplx() { Real = 1 });
-            p.ComplexNumbers.Add(Cplx.Zero);
-            p.ComplexNumbers.Add(Cplx.Zero);
-            p.ComplexNumbers.Add(new Cplx() { Real = 1 });
+            p.ComplexNumbers.Add(new Complex() { Real = 1 });
+            p.ComplexNumbers.Add(Complex.Zero);
+            p.ComplexNumbers.Add(Complex.Zero);
+            p.ComplexNumbers.Add(new Complex() { Real = 1 });
             Polynomial pd = p.Derive();
 
             Console.WriteLine(p);
@@ -49,16 +49,16 @@ namespace INPTPZ1
                     double y = arguments.Ymin + i * arguments.Ystep;
                     double x = arguments.Xmin + j * arguments.Xstep;
 
-                    Cplx ox = new Cplx()
+                    Complex ox = new Complex()
                     {
                         Real = x,
-                        Imaginari = (float)(y)
+                        Imaginary = (float)(y)
                     };
 
                     if (ox.Real == 0)
                         ox.Real = 0.0001;
-                    if (ox.Imaginari == 0)
-                        ox.Imaginari = 0.0001f;
+                    if (ox.Imaginary == 0)
+                        ox.Imaginary = 0.0001f;
 
                     // find solution of equation using newton's iteration
                     float it = 0;
@@ -67,7 +67,7 @@ namespace INPTPZ1
                         var diff = p.Evaluate(ox).Divide(pd.Evaluate(ox));
                         ox = ox.Subtract(diff);
 
-                        if (Math.Pow(diff.Real, 2) + Math.Pow(diff.Imaginari, 2) >= 0.5)
+                        if (Math.Pow(diff.Real, 2) + Math.Pow(diff.Imaginary, 2) >= 0.5)
                         {
                             q--;
                         }
@@ -78,7 +78,7 @@ namespace INPTPZ1
                     var id = 0;
                     for (int w = 0; w <koreny.Count;w++)
                     {
-                        if (Math.Pow(ox.Real- koreny[w].Real, 2) + Math.Pow(ox.Imaginari - koreny[w].Imaginari, 2) <= 0.01)
+                        if (Math.Pow(ox.Real- koreny[w].Real, 2) + Math.Pow(ox.Imaginary - koreny[w].Imaginary, 2) <= 0.01)
                         {
                             known = true;
                             id = w;

@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arguments\CommandLineArguments.cs" />
-    <Compile Include="Math\Cplx.cs" />
+    <Compile Include="Math\Complex.cs" />
     <Compile Include="Math\Polynomial.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
