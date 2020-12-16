@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INPTPZ1.Arguments
 {
-    public class CommandLineArguments
+    public class ImageArguments
     {
         private static readonly int IndexOfWidth = 0;
         private static readonly int IdefOfHeight = 1;
