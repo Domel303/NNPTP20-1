@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace INPTPZ1.Fractals
 {
-   public class NewtonFractals
+    public class NewtonFractals
     {
         private static readonly int IterationLimit = 30;
         private static readonly double NewtonsFractalLimit = 0.5;
