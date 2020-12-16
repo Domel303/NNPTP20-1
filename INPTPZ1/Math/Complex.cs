@@ -4,6 +4,8 @@ namespace INPTPZ1
 {
     public class Complex
     {
+        public static readonly int Power = 2;
+        private static readonly double RootLimit = 0.01;
         public double Real { get; set; }
         public double Imaginary { get; set; }
         public readonly static Complex Zero = new Complex()
@@ -50,6 +52,7 @@ namespace INPTPZ1
                 Imaginary = dividend.Imaginary / divisor
             };
         }
+
         public override string ToString()
         {
             return $"({Real} + {Imaginary}i)";
@@ -57,10 +60,10 @@ namespace INPTPZ1
 
         public override bool Equals(object obj)
         {
-            if (obj is Complex)
+            if (obj is Complex complex)
             {
-                Complex x = obj as Complex;
-                return x.Real == Real && x.Imaginary == Imaginary;
+               
+                return Math.Pow(Real - complex.Real, 2) + Math.Pow(Imaginary - complex.Imaginary, Power) <= RootLimit ;
             }
             return base.Equals(obj);
         }

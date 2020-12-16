@@ -17,19 +17,19 @@ namespace INPTPZ1.Mathematics.Tests
         {
             Complex a = new Complex()
             {
-                Re = 10,
+                Real = 10,
                 Imaginary = 20
             };
             Complex b = new Complex()
             {
-                Re = 1,
+                Real = 1,
                 Imaginary = 2
             };
 
             Complex actual = a.Add(b);
             Complex shouldBe = new Complex()
             {
-                Re = 11,
+                Real = 11,
                 Imaginary = 22
             };
 
