@@ -10,13 +10,13 @@ namespace INPTPZ1.Fractals
         private static readonly int IterationLimit = 30;
         private static readonly double NewtonsFractalLimit = 0.5;
         private static readonly int RGBColorValue = 255;
-        private static readonly Color[] colors =
+        private static readonly Color[] FractalsColors =
         {
             Color.Red, Color.Blue, Color.Green,
             Color.Yellow, Color.Orange, Color.Fuchsia,
             Color.Gold, Color.Cyan, Color.Magenta
         };
-        private static Polynomial StartFunction()
+        private static Polynomial CreateStartFunction()
         {
             Polynomial polynom = new Polynomial();
             polynom.ComplexNumbers.AddRange(new List<Complex> { new Complex() { Real = 1 },
@@ -25,26 +25,26 @@ namespace INPTPZ1.Fractals
                 new Complex() { Real = 1 } });
             return polynom;
         }
-        private bool InNewtonsLimit(Complex difference)
+        private bool IsInNewtonsLimit(Complex difference)
         {
             return (Math.Pow(difference.Real, Complex.Power) + Math.Pow(difference.Imaginary,Complex.Power) >= NewtonsFractalLimit);
         }
-        private Complex SolutionOfEquation(Complex coordinates, Polynomial derivedPolynom)
+        private Complex CalculateSolutionOfEquation(Complex coordinates, Polynomial derivedPolynom)
         {
             int iteractionNumber = 0;
             for (int i = 0; i < IterationLimit; i++)
             {
-                Complex difference = StartFunction().Evaluate(coordinates).Divide(derivedPolynom.Evaluate(coordinates));
+                Complex difference = CreateStartFunction().Evaluate(coordinates).Divide(derivedPolynom.Evaluate(coordinates));
                 coordinates = coordinates.Subtract(difference);
 
-                if (InNewtonsLimit(difference))
+                if (IsInNewtonsLimit(difference))
                     i--;
                 
                 iteractionNumber++;
             }
             return coordinates;
         }
-        private int findRoot(List<Complex> roots, Complex coordinates)
+        private int FindRoot(List<Complex> roots, Complex coordinates)
         {
             for (int i = 0; i < roots.Count; i++)
                 if (coordinates.Equals(roots[i]))
@@ -54,7 +54,7 @@ namespace INPTPZ1.Fractals
         }
         private Color ColorizePixel(int id)
         {
-            Color resultColor = colors[id % colors.Length];
+            Color resultColor = FractalsColors[id % FractalsColors.Length];
             resultColor = Color.FromArgb(Math.Min(Math.Max(0, resultColor.R - IterationLimit * Complex.Power), RGBColorValue),
                 Math.Min(Math.Max(0, resultColor.G - IterationLimit * Complex.Power), RGBColorValue),
                 Math.Min(Math.Max(0, resultColor.B - IterationLimit * Complex.Power), RGBColorValue));
@@ -65,7 +65,7 @@ namespace INPTPZ1.Fractals
            Bitmap image = new Bitmap(arguments.Width, arguments.Height);
 
             List<Complex> roots = new List<Complex>();
-            Polynomial derivedPolynom = StartFunction().Derive();
+            Polynomial derivedPolynom = CreateStartFunction().Derive();
 
             for (int x = 0; x < arguments.Width; x++)
             {
@@ -80,9 +80,9 @@ namespace INPTPZ1.Fractals
                         Imaginary = yPosition
                     };
 
-                    coordinates = SolutionOfEquation(coordinates, derivedPolynom);
+                    coordinates = CalculateSolutionOfEquation(coordinates, derivedPolynom);
 
-                    int id = findRoot( roots, coordinates);
+                    int id = FindRoot( roots, coordinates);
                     Color color = ColorizePixel(id);
                     image.SetPixel(y, x, color);
 
